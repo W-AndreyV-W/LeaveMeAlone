@@ -14,4 +14,5 @@ class LEAVEMEALONE_API ALMAGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+	ALMAGameMode();
 };
