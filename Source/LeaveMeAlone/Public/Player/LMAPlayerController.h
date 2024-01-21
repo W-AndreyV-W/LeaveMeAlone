@@ -6,7 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "LMAPlayerController.generated.h"
 
-/**
+/*
+ *
  * 
  */
 UCLASS()
@@ -21,4 +22,5 @@ public:
 protected:
 
 	virtual void BeginPlay() override;
+	virtual void BeginSpectatingState() override;
 };
