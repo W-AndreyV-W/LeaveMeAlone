@@ -34,6 +34,8 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 
 	HealthComponent = CreateDefaultSubobject<ULMAHealthComponent>("HealthComponent");
 
+	WeaponComponent = CreateDefaultSubobject<ULMAWeaponComponent>("Weapon");
+
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
@@ -80,6 +82,9 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("MoveCameraBack", IE_Pressed, this, &ALMADefaultCharacter::MoveCameraBack);
 	PlayerInputComponent->BindAction("AcceleratedCharacterMovement", IE_Pressed, this, &ALMADefaultCharacter::SprintCharacterOn);
 	PlayerInputComponent->BindAction("AcceleratedCharacterMovement", IE_Released, this, &ALMADefaultCharacter::SprintCharacterOff);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Fire);
+	PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &ULMAWeaponComponent::OffFire);
+	PlayerInputComponent->BindAction("Reload", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Reload);
 }
 
 void ALMADefaultCharacter::MoveForward(float Value) {
@@ -159,7 +164,7 @@ void ALMADefaultCharacter::OnDeath() {
 	GetCharacterMovement()->DisableMovement();
 	SetLifeSpan(5.0f);
 
-	if (Controller) {
+	if (IsValid(Controller)) {
 
 		Controller->ChangeState(NAME_Spectating);
 	}
@@ -176,7 +181,7 @@ void ALMADefaultCharacter::RotationPlayerOnCursor() {
 		float FindRotatorResultYaw = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), ResultHit.Location).Yaw;
 		SetActorRotation(FQuat(FRotator(0.0f, FindRotatorResultYaw, 0.0f)));
 		
-		if (CurrentCursor) {
+		if (IsValid(Controller)) {
 
 			CurrentCursor->SetWorldLocation(ResultHit.Location);
 		}
