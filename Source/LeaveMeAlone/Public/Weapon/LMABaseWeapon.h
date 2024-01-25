@@ -38,6 +38,7 @@ public:
 
 	void Fire();
 	void OffFire();
+	void AutoFireOnOff();
 	void ChangeClip();
 	bool IsCurrentClipComplete() const;
 

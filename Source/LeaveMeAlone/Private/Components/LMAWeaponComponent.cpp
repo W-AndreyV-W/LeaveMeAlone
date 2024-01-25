@@ -29,6 +29,11 @@ void ULMAWeaponComponent::OffFire() {
 	Weapon->OffFire();
 }
 
+void ULMAWeaponComponent::AutoFireOnOff() {
+
+	Weapon->AutoFireOnOff();
+}
+
 
 // Called when the game starts
 void ULMAWeaponComponent::BeginPlay()
@@ -116,6 +121,7 @@ void ULMAWeaponComponent::Recharge() {
 
     if (CanReload()) {
 
+		Weapon->OffFire();
 		Weapon->ChangeClip();
 		AnimReloading = true;
 		ACharacter* Character = Cast<ACharacter>(GetOwner());

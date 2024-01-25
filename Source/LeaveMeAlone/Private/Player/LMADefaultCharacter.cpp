@@ -84,6 +84,7 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("AcceleratedCharacterMovement", IE_Released, this, &ALMADefaultCharacter::SprintCharacterOff);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Fire);
 	PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &ULMAWeaponComponent::OffFire);
+	PlayerInputComponent->BindAction("AutoFireOnOff", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::AutoFireOnOff);
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Reload);
 }
 

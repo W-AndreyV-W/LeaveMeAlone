@@ -36,6 +36,11 @@ void ALMABaseWeapon::OffFire() {
 	}
 }
 
+void ALMABaseWeapon::AutoFireOnOff() {
+
+	AutoFire = !AutoFire;
+}
+
 void ALMABaseWeapon::ChangeClip() {
 
 	CurrentAmmoWeapon.Bullets = AmmoWeapon.Bullets;
@@ -76,7 +81,7 @@ void ALMABaseWeapon::DecrementBullets() {
 
 	if (IsCurrentClipEmpty()) {
 
-		GetWorldTimerManager().ClearTimer(TimerAutoFire);
+		OffFire();
 		OutBullets.Broadcast();
 	}
 }

@@ -20,6 +20,7 @@ public:
 
 	void Fire();
 	void OffFire();
+	void AutoFireOnOff();
 	void Reload();
 
 protected:
