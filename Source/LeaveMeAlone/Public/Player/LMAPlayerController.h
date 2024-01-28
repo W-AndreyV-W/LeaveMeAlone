@@ -19,6 +19,9 @@ public:
 
 	ALMAPlayerController();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool OnPause = false;
+
 protected:
 
 	virtual void BeginPlay() override;

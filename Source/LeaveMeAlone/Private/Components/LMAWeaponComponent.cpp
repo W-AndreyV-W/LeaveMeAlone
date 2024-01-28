@@ -16,6 +16,18 @@ ULMAWeaponComponent::ULMAWeaponComponent()
 	// ...
 }
 
+bool ULMAWeaponComponent::GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const {
+
+	if (IsValid(Weapon)) {
+
+		AmmoWeapon = Weapon->GetCurrentAmmoWeapon();
+
+		return true;
+	}
+
+	return false;
+}
+
 void ULMAWeaponComponent::Fire() {
 
 	if (IsValid(Weapon) && !AnimReloading) {
@@ -104,6 +116,7 @@ void ULMAWeaponComponent::OnNotifyReloadFinished(USkeletalMeshComponent* Skeleta
 	if (Character->GetMesh() == SkeletalMesh) {
 
 		AnimReloading = false;
+		Weapon->ChangeClip();
 	}
 }
 
@@ -122,7 +135,6 @@ void ULMAWeaponComponent::Recharge() {
     if (CanReload()) {
 
 		Weapon->OffFire();
-		Weapon->ChangeClip();
 		AnimReloading = true;
 		ACharacter* Character = Cast<ACharacter>(GetOwner());
 		Character->PlayAnimMontage(ReloadMontage);

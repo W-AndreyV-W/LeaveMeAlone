@@ -53,9 +53,7 @@ void ALMADefaultCharacter::BeginPlay()
 		CurrentCursor = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), CursorMaterial, CursorSize, FVector(0));
 	}
 
-	OnHealthChanged(HealthComponent->GetHealth());
 	HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
-	HealthComponent->OnHealthChanged.AddUObject(this, &ALMADefaultCharacter::OnHealthChanged);
 }
 
 // Called every frame
@@ -84,6 +82,7 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("AcceleratedCharacterMovement", IE_Released, this, &ALMADefaultCharacter::SprintCharacterOff);
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Fire);
 	PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &ULMAWeaponComponent::OffFire);
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::OffFire);
 	PlayerInputComponent->BindAction("AutoFireOnOff", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::AutoFireOnOff);
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Reload);
 }
@@ -187,9 +186,4 @@ void ALMADefaultCharacter::RotationPlayerOnCursor() {
 			CurrentCursor->SetWorldLocation(ResultHit.Location);
 		}
 	}
-}
-
-void ALMADefaultCharacter::OnHealthChanged(float NewHealth) {
-
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
 }

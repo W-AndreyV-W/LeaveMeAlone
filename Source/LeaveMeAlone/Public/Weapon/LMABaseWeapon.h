@@ -36,6 +36,11 @@ public:
 
 	FOutBullets OutBullets;
 
+	FAmmoWeapon GetCurrentAmmoWeapon() const { 
+		
+		return CurrentAmmoWeapon; 
+	}
+
 	void Fire();
 	void OffFire();
 	void AutoFireOnOff();

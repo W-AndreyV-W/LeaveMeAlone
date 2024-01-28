@@ -99,7 +99,6 @@ private:
 	void MoveCameraBack();
 	void OnDeath();
 	void RotationPlayerOnCursor();
-	void OnHealthChanged(float NewHealth);
 	void SprintCharacterOn();
 	void SprintCharacterOff();
 };
