@@ -77,12 +77,16 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	bool AutoFire = true;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	float Damage = 20;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	void SpawnTrace(const FVector& TraceStart, const FVector& TraceEnd);
 	void Shoot();
 	void DecrementBullets();
 	bool IsCurrentClipEmpty() const;
+	void MakeDamage(const FHitResult& HitResult);
 	
 
 public:	

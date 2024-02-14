@@ -6,6 +6,8 @@
 #include <Kismet/GameplayStatics.h>
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Engine/HitResult.h"
+#include "Engine/DamageEvents.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogWeapon, All, All);
 
@@ -61,7 +63,7 @@ void ALMABaseWeapon::SpawnTrace(const FVector& TraceStart, const FVector& TraceE
 
 	const auto TraceFX = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), TraceEffect, TraceStart);
 	
-	if (TraceFX) {
+	if (IsValid(TraceFX)) {
 
 		TraceFX->SetNiagaraVariableVec3(TraceName, TraceEnd);
 	}
@@ -79,6 +81,7 @@ void ALMABaseWeapon::Shoot() {
 	
 	if (HitResult.bBlockingHit) {
 
+		MakeDamage(HitResult);
 		TracerEnd = HitResult.ImpactPoint;
 	}
 
@@ -104,6 +107,26 @@ void ALMABaseWeapon::DecrementBullets() {
 bool ALMABaseWeapon::IsCurrentClipEmpty() const {
 
 	return CurrentAmmoWeapon.Bullets == 0;
+}
+
+void ALMABaseWeapon::MakeDamage(const FHitResult& HitResult) {
+
+	const auto Zombie = HitResult.GetActor();
+
+	if (IsValid(Zombie)) {
+
+		const auto Pawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		
+		if (IsValid(Pawn)) { 
+
+			const auto Controller = Pawn->GetController<APlayerController>();
+			
+			if (IsValid(Controller)) {
+
+				Zombie->TakeDamage(Damage, FDamageEvent(), Controller, this);
+			}
+		}
+	}
 }
 
 bool ALMABaseWeapon::IsCurrentClipComplete() const {
