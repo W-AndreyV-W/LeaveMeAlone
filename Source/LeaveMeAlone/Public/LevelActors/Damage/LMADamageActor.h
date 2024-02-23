@@ -29,6 +29,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	float Damage = 5.0f;
 
+	// Deals damage to every Character.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+	bool DamageToAll = true;
+
 	// The size of the radius of the damage sphere.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	float SphereRadius = 100.0f;

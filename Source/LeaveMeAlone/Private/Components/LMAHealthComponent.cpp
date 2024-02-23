@@ -2,6 +2,7 @@
 
 
 #include "Components/LMAHealthComponent.h"
+#include "LevelActors/Damage/LMADamageActor.h"
 
 // Sets default values for this component's properties
 ULMAHealthComponent::ULMAHealthComponent()
@@ -55,11 +56,22 @@ void ULMAHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 
 	if (!IsDead()) {
 
-		Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
+		const auto DamageActor = Cast<ALMADamageActor>(DamageCauser);
+		bool DamageToAll = true;
 
-		if (IsDead()) {
+		if (IsValid(DamageActor)) {
+		
+			DamageToAll = DamageActor->DamageToAll;
+		}
+		
+		if (DamageToAll || DamageFromAll) {
 
-			OnDeath.Broadcast();
+			Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
+
+			if (IsDead()) {
+
+				OnDeath.Broadcast();
+			}
 		}
 	}
 }

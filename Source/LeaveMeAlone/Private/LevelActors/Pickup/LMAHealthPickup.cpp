@@ -13,7 +13,6 @@ ALMAHealthPickup::ALMAHealthPickup()
 	PrimaryActorTick.bCanEverTick = true;
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
-	//SphereComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	SetRootComponent(SphereComponent);
 }
@@ -31,9 +30,19 @@ void ALMAHealthPickup::NotifyActorBeginOverlap(AActor* OtherActor) {
 
 	const auto Charcter = Cast<ALMADefaultCharacter>(OtherActor);
 
-	if (GivePickup(Charcter)) {
+	if (IsValid(Charcter)) {
+	
+		if (GivePickup(Charcter)) {
 
-		PickupWasTaken();
+			if (Respawn) {
+			
+				PickupWasTaken();
+			}
+			else {
+			
+				K2_DestroyActor();
+			}
+		}
 	}
 }
 

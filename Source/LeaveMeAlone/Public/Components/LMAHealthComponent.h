@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Math/Vector.h"
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "LMAHealthComponent.generated.h"
@@ -25,6 +26,8 @@ public:
 		return Health; 
 	}
 
+
+
 	UFUNCTION(BlueprintCallable)
 	bool IsDead() const;
 
@@ -37,9 +40,13 @@ public:
 protected:
 
 	// Maximum health.
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health")
 	float MaxHealth = 100.0f;
 
+	// Receives damage from all DamageActor.
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Damage")
+	bool DamageFromAll = true;
+	
 	// Called when the game starts
 	virtual void BeginPlay() override;
 

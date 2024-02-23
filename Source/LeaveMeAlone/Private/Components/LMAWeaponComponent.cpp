@@ -30,7 +30,7 @@ bool ULMAWeaponComponent::GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const {
 
 void ULMAWeaponComponent::Fire() {
 
-	if (IsValid(Weapon) && !AnimReloading) {
+	if (IsValid(Weapon) && !AnimReloading && !BlockingWeapons) {
 
 		Weapon->Fire();
 	}
@@ -86,7 +86,21 @@ void ULMAWeaponComponent::SpawnWeapon() {
 
 void ULMAWeaponComponent::Reload() {
 
-	Recharge();
+	if (!BlockingWeapons) {
+	
+		Recharge();
+	}
+}
+
+void ULMAWeaponComponent::OnBlockingWeapons() {
+
+	BlockingWeapons = true;
+	OffFire();
+}
+
+void ULMAWeaponComponent::OffBlockingWeapons() {
+
+	BlockingWeapons = false;
 }
 
 void ULMAWeaponComponent::InitAnimNotify() {

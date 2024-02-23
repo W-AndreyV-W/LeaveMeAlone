@@ -131,15 +131,16 @@ void ALMADefaultCharacter::SprintCharacterOn() {
 
 		SprintCharacter = true;
 
+		WeaponComponent->OnBlockingWeapons();
 		GetWorldTimerManager().SetTimer(TimerSprintCharacterOff, this, &ALMADefaultCharacter::SprintCharacterOff, SprintTime);
 	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("SpeedTimer = %f"), SprintTime));
 }
 
 void ALMADefaultCharacter::SprintCharacterOff() {
 
 	SprintCharacter = false;
+
+	WeaponComponent->OffBlockingWeapons();
 	
 	if (GetWorldTimerManager().IsTimerActive(TimerSprintCharacterOff)) {
 
@@ -153,8 +154,6 @@ void ALMADefaultCharacter::SprintCharacterOff() {
 
 		SprintTime = 0.0f;
 	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("SpeedTimer = %f"), SprintTime));
 }
 
 void ALMADefaultCharacter::OnDeath() {

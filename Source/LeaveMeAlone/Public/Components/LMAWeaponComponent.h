@@ -27,6 +27,8 @@ public:
 	void Fire();
 	void AutoFireOnOff();
 	void Reload();
+	void OnBlockingWeapons();
+	void OffBlockingWeapons();
 
 protected:
 
@@ -50,6 +52,7 @@ private:
 	ALMABaseWeapon* Weapon = nullptr;
 	
 	bool AnimReloading = false;
+	bool BlockingWeapons = false;
 
 	void SpawnWeapon();
 	void InitAnimNotify();
